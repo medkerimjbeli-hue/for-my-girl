@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>For Ranim</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0f1020;
+      --bg2:#1a1740;
+      --accent:#ff69b4;
+      --accent2:#ffd166;
+      --rose:#ff2d55;
+      --leaf:#2ecc71;
+      --sky:#98c1d9;
+      --light:#ffffff;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;
+      margin:0;
+      background: radial-gradient(1200px 600px at 50% 30%, var(--bg2), var(--bg1));
+      color:var(--light);
+      overflow:hidden;
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial;
+    }
+
+    /* Subtle floating lights background */
+    .glow{
+      position:fixed; inset:0; pointer-events:none; filter:blur(40px); opacity:0.35;
+      background:
+        radial-gradient(60px 60px at 15% 20%, #ff8fab55, transparent 70%),
+        radial-gradient(80px 80px at 80% 30%, #7df9ff55, transparent 70%),
+        radial-gradient(70px 70px at 30% 70%, #baffc955, transparent 70%),
+        radial-gradient(90px 90px at 60% 85%, #ffd16655, transparent 70%);
+      animation: aurora 16s ease-in-out infinite alternate;
+    }
+    @keyframes aurora{
+      0%{transform:translate3d(0,0,0)}
+      100%{transform:translate3d(0,-20px,0)}
+    }
+
+    /* Center stage */
+    .stage{
+      position:relative;
+      width:100%; height:100%;
+      display:grid; place-items:center;
+      padding:24px;
+    }
+
+    .card{
+      position:relative;
+      width:min(720px, 92vw);
+      border-radius:24px;
+      padding:40px 32px;
+      background:linear-gradient(180deg, #1c1a33 0%, #121126 100%);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 60px rgba(255,255,255,0.04);
+      overflow:hidden;
+    }
+
+    /* Button */
+    .cta{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:12px; padding:16px 26px; border-radius:999px; border:none; cursor:pointer;
+      background:linear-gradient(135deg, var(--accent), #ff8fab);
+      color:white; font-size:22px; font-weight:700; letter-spacing:0.8px;
+      box-shadow:0 10px 25px rgba(255,105,180,0.45);
+      transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .cta:hover{ transform:translateY(-2px) scale(1.02); filter:saturate(1.2); box-shadow:0 18px 35px rgba(255,105,180,0.55); }
+    .cta:active{ transform:translateY(2px) scale(0.98); }
+
+    /* Title flourish */
+    .title{
+      font-family:'Great Vibes', cursive;
+      font-size:48px; line-height:1.1; text-align:center; margin:0 0 8px;
+      background:linear-gradient(90deg, #ffd166, #ff69b4 50%, #7df9ff);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-shadow: 0 2px 12px rgba(255, 225, 150, 0.3);
+    }
+    .subtitle{
+      text-align:center; margin:0 0 28px; color:#cfd3ff; font-weight:300;
+    }
+
+    /* Hidden celebration area */
+    .celebration{
+      position:relative;
+      width:100%;
+      display:none;
+      margin-top:20px;
+    }
+    .celebration.show{ display:block; }
+
+    /* Flower bloom container */
+    .garden{
+      position:relative;
+      width:100%;
+      height:260px;
+      display:grid; place-items:center;
+      margin:24px 0 12px;
+    }
+
+    /* A stylized flower using layered petals and leaves */
+    .flower{
+      position:relative;
+      width:160px; height:160px;
+      transform:translateZ(0);
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float{
+      0%,100%{ transform:translateY(0) }
+      50%{ transform:translateY(-6px) }
+    }
+    .core{
+      position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+      width:34px; height:34px; border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #ffe66d, #ffb703);
+      box-shadow:0 0 16px #ffd16688;
+      z-index:5;
+    }
+    .petal{
+      position:absolute;
+      width:80px; height:50px; border-radius:50px 50px 8px 8px;
+      background:linear-gradient(180deg, #ff2d55, #ff8fab);
+      box-shadow:0 6px 16px rgba(255,45,85,0.35);
+      transform-origin:10px 25px;
+      opacity:0; animation: bloom .9s ease-out forwards;
+    }
+    @keyframes bloom{
+      0%{ transform:scale(.2) rotate(0deg); opacity:0 }
+      100%{ transform:scale(1) rotate(var(--angle)); opacity:1 }
+    }
+    /* place 6 petals around the core */
+    .p1{ --angle: 0deg; left:50%; top:50%; transform:translate(-50%,-50%) }
+    .p2{ --angle: 60deg; left:50%; top:50%; transform:translate(-50%,-50%) }
+    .p3{ --angle: 120deg; left:50%; top:50%; transform:translate(-50%,-50%) }
+    .p4{ --angle: 180deg; left:50%; top:50%; transform:translate(-50%,-50%) }
+    .p5{ --angle: 240deg; left:50%; top:50%; transform:translate(-50%,-50%) }
+    .p6{ --angle: 300deg; left:50%; top:50%; transform:translate(-50%,-50%) }
+
+    /* Leaves */
+    .leaf{
+      position:absolute; width:70px; height:42px; border-radius:0 70px 70px 70px;
+      background:linear-gradient(180deg, #27ae60, #2ecc71);
+      filter:brightness(1.05);
+      transform-origin:10% 50%;
+      box-shadow:0 6px 16px rgba(39,174,96,0.32);
+      opacity:0; animation: leafIn .9s .3s ease-out forwards;
+    }
+    @keyframes leafIn{
+      0%{ transform:scale(.3) rotate(0deg); opacity:0 }
+      100%{ transform:scale(1) rotate(var(--angle)); opacity:1 }
+    }
+    .l1{ --angle:-25deg; left:calc(50% - 44px); top:calc(50% + 40px) }
+    .l2{ --angle:210deg; left:calc(50% + 12px); top:calc(50% + 46px) }
+
+    /* Hearts confetti */
+    .hearts{
+      position:absolute; inset:0; pointer-events:none;
+    }
+    .heart{
+      position:absolute; width:18px; height:18px;
+      transform:translate(-50%, -50%) scale(0);
+      animation: pop 550ms ease-out forwards, drift 6.5s ease-in-out infinite;
+      filter:drop-shadow(0 6px 12px rgba(255,105,180,.5));
+    }
+    .heart:before, .heart:after{
+      content:""; position:absolute; width:50%; height:70%;
+      background:var(--hcol); border-radius:8px 8px 0 0;
+    }
+    .heart:before{ left:0; transform:rotate(-45deg) translateY(10%) }
+    .heart:after{ right:0; transform:rotate(45deg) translateY(10%) }
+    .heart{
+      --hcol: #ff69b4;
+    }
+    @keyframes pop{ to{ transform:translate(-50%,-50%) scale(1) } }
+    @keyframes drift{
+      0%{ transform:translate(-50%,-50%) scale(1) translateY(0) }
+      50%{ transform:translate(-50%,-50%) scale(1) translateY(-28px) }
+      100%{ transform:translate(-50%,-50%) scale(1) translateY(0) }
+    }
+
+    /* Headline and message */
+    .love-title{
+      font-family:'Great Vibes', cursive;
+      font-size:54px; text-align:center; margin:8px 0 6px;
+      color:#fff; letter-spacing:1px;
+      opacity:0; transform:translateY(12px) scale(.98);
+      animation: titleIn .9s .5s ease-out forwards;
+      text-shadow:0 3px 18px rgba(255,105,180,.35), 0 0 14px rgba(255,209,102,.25);
+    }
+    @keyframes titleIn{
+      to{ opacity:1; transform:translateY(0) scale(1) }
+    }
+
+    .message{
+      font-size:16.5px; line-height:1.7; color:#e9ecff; text-align:center;
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:16px; padding:18px 16px; margin-top:12px;
+      opacity:0; transform:translateY(8px);
+      animation: msgIn .9s .8s ease forwards;
+    }
+    @keyframes msgIn{ to{ opacity:1; transform:translateY(0) } }
+
+    /* Sparkling underline */
+    .underline{
+      width:180px; height:2px; margin:10px auto 0; border-radius:999px;
+      background:linear-gradient(90deg, transparent, #ffd166, #ff69b4, transparent);
+      filter:blur(.3px);
+      opacity:0; animation: lineIn .9s .75s ease-out forwards;
+    }
+    @keyframes lineIn{ to{ opacity:1 } }
+
+    /* Footer hint */
+    .hint{
+      text-align:center; font-size:13px; color:#bfc4ff; margin-top:14px;
+      opacity:.8;
+    }
+
+    /* Firework-like aura on show */
+    .card.show::before{
+      content:""; position:absolute; inset:-2px; border-radius:24px;
+      background:
+        radial-gradient(600px 240px at 20% 20%, #ff69b425, transparent 70%),
+        radial-gradient(600px 240px at 80% 30%, #ffd16625, transparent 70%),
+        radial-gradient(600px 240px at 50% 80%, #7df9ff25, transparent 70%);
+      animation:pulse 2.6s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{ opacity:.5 }
+      50%{ opacity:.8 }
+    }
+
+    /* Responsive */
+    @media (max-width:480px){
+      .flower{ transform:scale(.85) }
+      .love-title{ font-size:42px }
+      .title{ font-size:40px }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+  <main class="stage">
+    <section class="card" id="card">
+      <h1 class="title">A little surprise</h1>
+      <p class="subtitle">Press the button below and wait for the garden to bloom.</p>
+
+      <div style="display:grid; place-items:center; margin:8px 0 14px;">
+        <button class="cta" id="clickMe">
+          CLICK ME !
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01L12 3z"
+                  fill="#fff" opacity=".85"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Celebration -->
+      <div class="celebration" id="celebration">
+        <!-- Flower -->
+        <div class="garden">
+          <div class="flower">
+            <div class="core"></div>
+            <div class="petal p1"></div>
+            <div class="petal p2"></div>
+            <div class="petal p3"></div>
+            <div class="petal p4"></div>
+            <div class="petal p5"></div>
+            <div class="petal p6"></div>
+            <div class="leaf l1"></div>
+            <div class="leaf l2"></div>
+          </div>
+          <div class="hearts" id="hearts"></div>
+        </div>
+
+        <h2 class="love-title">I LOVE YOU RANIM</h2>
+        <div class="underline"></div>
+        <p class="message">
+          You are the best thing that happened to my life everything from ' Terim' to our meeting in Benzart you made me feel loved seen and appreciated and I want you to know that I want you forever and I love you forever you are a gift from the heavens and I will never give you up until the last day of my life
+        </p>
+        <p class="hint">Tap the title to shower more hearts ✨</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const btn = document.getElementById('clickMe');
+    const card = document.getElementById('card');
+    const celebration = document.getElementById('celebration');
+    const heartsLayer = document.getElementById('hearts');
+
+    // Create floating hearts
+    function spawnHearts(count = 24){
+      const rect = heartsLayer.getBoundingClientRect();
+      for(let i=0;i<count;i++){
+        const h = document.createElement('div');
+        h.className = 'heart';
+        const colors = ['#ff69b4','#ffd166','#7df9ff','#ff8fab','#baffc9'];
+        h.style.setProperty('--hcol', colors[Math.floor(Math.random()*colors.length)]);
+        const x = Math.random()*rect.width;
+        const y = 80 + Math.random()* (rect.height - 160);
+        h.style.left = x+'px';
+        h.style.top = y+'px';
+        h.style.animationDelay = (Math.random()*0.6)+'s';
+        h.style.transform += ` rotate(${(Math.random()*30-15)}deg)`; // slight rotation
+        heartsLayer.appendChild(h);
+        // remove after animation to keep DOM clean
+        setTimeout(()=> h.remove(), 7000);
+      }
+    }
+
+    // Bloom sequence on click
+    btn.addEventListener('click', () => {
+      celebration.classList.add('show');
+      card.classList.add('show');
+      spawnHearts(32);
+
+      // Gentle scroll to reveal message if on mobile
+      setTimeout(()=> {
+        card.scrollIntoView({behavior:'smooth', block:'center'});
+      }, 400);
+    });
+
+    // Extra hearts on title click
+    document.querySelector('.love-title').addEventListener('click', () => {
+      spawnHearts(20);
+    });
+  </script>
+</body>
+</html>
